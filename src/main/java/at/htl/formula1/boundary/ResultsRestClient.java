@@ -43,38 +43,6 @@ public class ResultsRestClient {
         System.out.println("payload = " + payload);
 
         persistResult(payload);
-
-//        try {
-//            URL url = new URL("http://vm90.htl-leonding.ac.at/results");
-//
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setRequestMethod("GET");
-//            conn.connect();
-//
-//            int responsecode = conn.getResponseCode();
-//
-//            if (responsecode != 200)
-//                throw new RuntimeException("HttpResponseCode: " + responsecode);
-//
-//            Scanner sc = new Scanner(url.openStream());
-//            String inline = "";
-//
-//            while(sc.hasNext()) {
-//                inline += sc.nextLine();
-//            }
-//
-//            System.out.println("\nJSON data in string format");
-//            System.out.println(inline);
-//
-//            JsonParser parser = new JsonParser()
-//
-//            sc.close();
-//
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     /**
