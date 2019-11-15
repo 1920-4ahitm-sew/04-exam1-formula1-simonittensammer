@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Table(name = "F1_RESULT")
 @NamedQueries({
         @NamedQuery(name = "Result.getPointsSumOfDriver", query = "select sum(points) from Result r where r.driver = :ID"),
-        @NamedQuery(name = "Result.getWinnerByRace", query = "select driver from Result r where position = 1 and r.race = :RACE")
+        @NamedQuery(name = "Result.getWinnerByRace", query = "select driver from Result r where position = 1 and r.race = :RACE"),
+        @NamedQuery(name = "Result.victoriesByIds", query = "select sum(r) from Result r where position = 1 and r.id = :ID1 or r.id = :ID2")
 })
 public class Result {
 

@@ -2,6 +2,7 @@ package at.htl.formula1.boundary;
 
 import at.htl.formula1.entity.Driver;
 import at.htl.formula1.entity.Race;
+import at.htl.formula1.entity.Team;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -48,7 +49,6 @@ public class ResultsEndpoint {
     @Path("winner/{country}")
     public Response findWinnerOfRace(@PathParam("country") String country) {
 
-
         Race race = (Race) this.em.createNamedQuery("Race.getByCountry").setParameter("COUNTRY", country).getSingleResult();
         Driver winner = (Driver) this.em.createNamedQuery("Result.getWinnerByRace").setParameter("RACE", race).getSingleResult();
 
@@ -56,6 +56,45 @@ public class ResultsEndpoint {
     }
 
 
-    // Ergänzen Sie Ihre eigenen Methoden ...
+    @GET
+    @Path("raceswon")
+    public JsonObject racesWon(@QueryParam("team") String teamName) {
+//Result.victoriesByIds
+        int help = 0;
 
+        Team team = (Team) this.em.createNamedQuery("Team.getByName").setParameter("NAME", teamName).getSingleResult();
+        Driver driver1 = (Driver) this.em.createNamedQuery("Driver.getByTeam").setParameter("TEAM", team).getSingleResult();
+
+        System.out.println(driver1);
+
+//        JsonObject driverJson = Json.createObjectBuilder()
+//                .add("driver", name)
+//                .add("points", points)
+//                .build();
+//
+//        return driverJson;
+
+        return null;
+    }
+
+    @GET
+    @Path("all")
+    public JsonObject pointsOfEveryDriver() {
+        long count = (long) em.createNamedQuery("Driver.amountOfDrivers").getSingleResult();
+
+        System.out.println(count);
+
+        for (int i = 0; i < 20; i++) {
+
+        }
+
+//        JsonObject driverJson = Json.createObjectBuilder()
+//                .add("driver", name)
+//                .add("points", points)
+//                .build();
+//
+//        return driverJson;
+
+        return null;
+    }
 }

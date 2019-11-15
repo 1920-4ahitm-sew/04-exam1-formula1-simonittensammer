@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Table(name = "F1_DRIVER")
 @NamedQueries({
         @NamedQuery(name = "Driver.getByName", query = "select v from Driver v where v.name = :NAME"),
-        @NamedQuery(name = "Driver.getIdByName", query = "select id from Driver v where v.name = :NAME")
+        @NamedQuery(name = "Driver.getIdByName", query = "select id from Driver v where v.name = :NAME"),
+        @NamedQuery(name = "Driver.amountOfDrivers", query = "select count(v) from Driver v"),
+        @NamedQuery(name = "Driver.getIdByTeam", query = "select id from Driver v where v.team = :TEAM and v.id <> :ID")
 })
 public class Driver {
 
