@@ -9,6 +9,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "F1_DRIVER")
+@NamedQueries({
+        @NamedQuery(name = "Driver.getById", query = "select v from Driver v where v.name = :ID")
+})
 public class Driver {
 
     @Id

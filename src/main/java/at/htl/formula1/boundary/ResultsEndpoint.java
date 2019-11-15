@@ -19,9 +19,9 @@ public class ResultsEndpoint {
      * @param name als QueryParam einzulesen
      * @return JsonObject
      */
-    public JsonObject getPointsSumOfDriver(
-            String name
-    ) {
+    @POST
+    @Path("results")
+    public JsonObject getPointsSumOfDriver(String name) {
         return null;
     }
 
