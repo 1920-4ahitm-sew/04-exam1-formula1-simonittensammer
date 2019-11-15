@@ -9,6 +9,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "F1_RESULT")
+@NamedQueries({
+        @NamedQuery(name = "Result.getPointsSumOfDriver", query = "select sum(points) from Result r where r.driver = :ID")
+})
 public class Result {
 
     @Transient

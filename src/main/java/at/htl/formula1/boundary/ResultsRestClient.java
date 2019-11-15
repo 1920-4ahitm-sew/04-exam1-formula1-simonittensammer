@@ -40,7 +40,7 @@ public class ResultsRestClient {
 
         Response response = this.target.request(MediaType.APPLICATION_JSON).get();
         JsonArray payload = response.readEntity(JsonArray.class);
-        System.out.println("payload = " + payload);
+//        System.out.println("payload = " + payload);
 
         persistResult(payload);
     }

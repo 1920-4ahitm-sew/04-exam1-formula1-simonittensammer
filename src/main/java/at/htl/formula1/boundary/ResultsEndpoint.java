@@ -14,22 +14,35 @@ import java.util.List;
 @Path("results")
 public class ResultsEndpoint {
 
+    @PersistenceContext
+    EntityManager em;
 
     /**
      * @param name als QueryParam einzulesen
      * @return JsonObject
      */
+    @GET
     @Path("")
     public JsonObject getPointsSumOfDriver(@QueryParam("name") String name) {
-        System.out.println(name);
-        return null;
+        //Long id = (Long) this.em.createNamedQuery("Driver.getIdByName").setParameter("NAME", name).getSingleResult();
+        Driver driver = (Driver) this.em.createNamedQuery("Driver.getByName").setParameter("NAME", name).getSingleResult();
+        Long points = (Long) this.em.createNamedQuery("Result.getPointsSumOfDriver").setParameter("ID", driver).getSingleResult();
+
+//        System.out.println(name + ": " + points);
+
+        JsonObject driverJson = Json.createObjectBuilder()
+                .add("driver", name)
+                .add("points", points)
+                .build();
+
+        return driverJson;
     }
 
     /**
      * @param id des Rennens
      * @return
      */
-    @Path("results/winner")
+    @Path("winner")
     public Response findWinnerOfRace(long id) {
         return null;
     }
