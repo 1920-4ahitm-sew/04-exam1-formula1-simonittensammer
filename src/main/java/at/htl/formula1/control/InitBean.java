@@ -13,7 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -34,12 +36,12 @@ public class InitBean {
     @Inject
     ResultsRestClient client;
 
-
+    @Transactional
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
 
         readTeamsAndDriversFromFile(TEAM_FILE_NAME);
         readRacesFromFile(RACES_FILE_NAME);
-        client.readResultsFromEndpoint();
+        //client.readResultsFromEndpoint();
 
     }
 
@@ -49,8 +51,35 @@ public class InitBean {
      * @param racesFileName
      */
     private void readRacesFromFile(String racesFileName) {
+        try {
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            getClass().getResourceAsStream("/" + racesFileName)
+                    )
+            );
 
+            br.readLine();
 
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] row = line.split(";");
+                // row[0]: id
+                // row[1]: country
+                // row[2]: date
+
+                //String to LocalDate
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                LocalDate date = LocalDate.parse(row[2], formatter);
+
+                Race currentRace;
+                currentRace = new Race(Long.parseLong(row[0]), row[1], date);
+
+                em.persist(currentRace);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
