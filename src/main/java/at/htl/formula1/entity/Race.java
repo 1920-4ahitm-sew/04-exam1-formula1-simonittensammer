@@ -12,6 +12,7 @@ import java.time.LocalDate;
  */
 public class Race {
 
+    @Id
     private Long id;
     private String country;
     private LocalDate date;
