@@ -41,7 +41,7 @@ public class InitBean {
 
         readTeamsAndDriversFromFile(TEAM_FILE_NAME);
         readRacesFromFile(RACES_FILE_NAME);
-        //client.readResultsFromEndpoint();
+        client.readResultsFromEndpoint();
 
     }
 
@@ -102,16 +102,7 @@ public class InitBean {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] row = line.split(";");
-                // row[0]: team
-                // row[1]: driver1
-                // row[2]: driver2
-
-                Team currentTeam = new Team(row[0]);
-
-                em.persist(currentTeam);
-
-                em.persist(new Driver(row[1], currentTeam));
-                em.persist(new Driver(row[2], currentTeam));
+                persistTeamAndDrivers(row);
             }
 
         } catch (IOException e) {
@@ -127,11 +118,20 @@ public class InitBean {
      * Dieses Objekt wird verwendet, um die Fahrer mit Ihrem jeweiligen Team
      * in der Tabelle F!_DRIVER zu speichern.
      *
-     * @param line String-Array mit den einzelnen Werten der csv-Datei
+     * @param row String-Array mit den einzelnen Werten der csv-Datei
      */
 
-    private void persistTeamAndDrivers(String[] line) {
+    private void persistTeamAndDrivers(String[] row) {
+        // row[0]: team
+        // row[1]: driver1
+        // row[2]: driver2
 
+        Team currentTeam = new Team(row[0]);
+
+        em.persist(currentTeam);
+
+        em.persist(new Driver(row[1], currentTeam));
+        em.persist(new Driver(row[2], currentTeam));
     }
 
 
