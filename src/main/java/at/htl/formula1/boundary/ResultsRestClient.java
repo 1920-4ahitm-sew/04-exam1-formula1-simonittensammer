@@ -98,7 +98,23 @@ public class ResultsRestClient {
      */
     @Transactional
     void persistResult(JsonArray resultsJson) {
+        long raceNo;
+        String driverName;
+        int position;
 
+        for (JsonValue jsonValue : resultsJson) {
+            JsonObject resultJson = jsonValue.asJsonObject();
+
+            raceNo = resultJson.getInt("raceNo");
+            driverName = resultJson.getString("driverFullName");
+            position = resultJson.getInt("position");
+
+            em.persist(new Result(
+                    (Race) this.em.createNamedQuery("Race.getById").setParameter("ID", raceNo).getSingleResult(),
+                    position,
+                    (Driver) this.em.createNamedQuery("Driver.getByName").setParameter("NAME", driverName).getSingleResult()
+            ));
+        }
     }
 
 }
