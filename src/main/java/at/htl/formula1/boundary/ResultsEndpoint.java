@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-
+@Path("results")
 public class ResultsEndpoint {
 
 
@@ -19,9 +19,9 @@ public class ResultsEndpoint {
      * @param name als QueryParam einzulesen
      * @return JsonObject
      */
-    @POST
-    @Path("results")
-    public JsonObject getPointsSumOfDriver(String name) {
+    @Path("")
+    public JsonObject getPointsSumOfDriver(@QueryParam("name") String name) {
+        System.out.println(name);
         return null;
     }
 
@@ -29,6 +29,7 @@ public class ResultsEndpoint {
      * @param id des Rennens
      * @return
      */
+    @Path("results/winner")
     public Response findWinnerOfRace(long id) {
         return null;
     }
