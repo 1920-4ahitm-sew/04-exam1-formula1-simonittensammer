@@ -30,7 +30,7 @@
 
 === Fehler 2
 
-==== Fehlende Funktion
+==== Fehlende Methode
 
 [source,java]
 ----
@@ -43,5 +43,29 @@
                 .getResultList();
 
         return wonRaces;
+    }
+----
+
+=== Fehler 3
+
+==== Fehlende Methode
+
+[source,java]
+----
+@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("all")
+    public List<String[]> allRacesWonByTeam() {
+        List<Driver> drivers = em.createNamedQuery("Driver.findAll", Driver.class).getResultList();
+        List<String[]> driverWithPoints = new LinkedList<>();
+
+        for (Driver driver: drivers) {
+            Long points = em.createNamedQuery("Result.allPoints", Long.class)
+                    .setParameter("ID", driver)
+                    .getSingleResult();
+            driverWithPoints.add(new String[]{driver.toString(), "" + points});
+        }
+
+        return driverWithPoints;
     }
 ----
