@@ -11,8 +11,14 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "F1_RACE")
 @NamedQueries({
-        @NamedQuery(name = "Race.getById", query = "select r from Race r where r.id = :ID"),
-        @NamedQuery(name = "Race.getByCountry", query = "select r from Race r where r.country = :COUNTRY")
+        @NamedQuery(
+                name = "Race.getById",
+                query = "select r from Race r where r.id = :ID"
+        ),
+        @NamedQuery(
+                name = "Race.getByCountry",
+                query = "select r from Race r where r.country = :COUNTRY"
+        )
 })
 public class Race {
 
