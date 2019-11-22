@@ -57,24 +57,14 @@ public class ResultsEndpoint {
 
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("raceswon")
-    public JsonObject racesWon(@QueryParam("team") String teamName) {
-//Result.victoriesByIds
-        int help = 0;
+    public List<Race> allRacesWonByTeam(@QueryParam("team") String team) {
+        List<Race> wonRaces = em.createNamedQuery("Result.wonRaces", Race.class)
+                .setParameter("TEAMNAME", team)
+                .getResultList();
 
-        Team team = (Team) this.em.createNamedQuery("Team.getByName").setParameter("NAME", teamName).getSingleResult();
-        Driver driver1 = (Driver) this.em.createNamedQuery("Driver.getByTeam").setParameter("TEAM", team).getSingleResult();
-
-        System.out.println(driver1);
-
-//        JsonObject driverJson = Json.createObjectBuilder()
-//                .add("driver", name)
-//                .add("points", points)
-//                .build();
-//
-//        return driverJson;
-
-        return null;
+        return wonRaces;
     }
 
     @GET

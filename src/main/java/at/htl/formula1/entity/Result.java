@@ -10,9 +10,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "F1_RESULT")
 @NamedQueries({
-        @NamedQuery(name = "Result.getPointsSumOfDriver", query = "select sum(points) from Result r where r.driver = :ID"),
-        @NamedQuery(name = "Result.getWinnerByRace", query = "select driver from Result r where position = 1 and r.race = :RACE"),
-        @NamedQuery(name = "Result.victoriesByIds", query = "select sum(r) from Result r where position = 1 and r.id = :ID1 or r.id = :ID2")
+        @NamedQuery(
+                name = "Result.getPointsSumOfDriver",
+                query = "select sum(points) from Result r where r.driver = :ID"
+        ),
+        @NamedQuery(
+                name = "Result.getWinnerByRace",
+                query = "select driver from Result r where position = 1 and r.race = :RACE"
+        ),
+        @NamedQuery(
+                name = "Result.wonRaces",
+                query = "select re.race from Result re where re.position = 1 and re.driver in (select distinct d.id from Driver d where d.team = (select t.id from Team t where t.name like :TEAMNAME))"
+        ),
 })
 public class Result {
 
