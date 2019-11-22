@@ -69,3 +69,31 @@
         return driverWithPoints;
     }
 ----
+
+=== Fehler 4
+
+==== Wuerstelcode
+
+.Old
+[source,java]
+----
+@NamedQueries({
+        @NamedQuery(name = "Race.getById", query = "select r from Race r where r.id = :ID"),
+        @NamedQuery(name = "Race.getByCountry", query = "select r from Race r where r.country = :COUNTRY")
+})
+----
+
+.New
+[source,java]
+----
+@NamedQueries({
+        @NamedQuery(
+                name = "Race.getById",
+                query = "select r from Race r where r.id = :ID"
+        ),
+        @NamedQuery(
+                name = "Race.getByCountry",
+                query = "select r from Race r where r.country = :COUNTRY"
+        )
+})
+----
