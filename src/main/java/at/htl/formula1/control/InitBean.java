@@ -54,8 +54,10 @@ public class InitBean {
         try {
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(
-                            getClass().getResourceAsStream("/" + racesFileName)
-                    )
+                            getClass()
+                                    .getResourceAsStream(
+                                            "/" + racesFileName),
+                            StandardCharsets.UTF_8)
             );
 
             br.readLine();
