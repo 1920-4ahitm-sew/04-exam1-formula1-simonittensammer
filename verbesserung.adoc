@@ -1,0 +1,32 @@
+= Verbesserung
+
+== Simon Ittensammer
+
+=== Fehler 1
+
+==== Charset UTF-8
+
+.Old
+[source,java]
+----
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            getClass().getResourceAsStream("/" + racesFileName)
+                    )
+            );
+----
+
+.New
+[source,java]
+----
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            getClass()
+                                    .getResourceAsStream(
+                                            "/" + racesFileName),
+                            StandardCharsets.UTF_8)
+            );
+----
+
+=== Fehler 2
+
