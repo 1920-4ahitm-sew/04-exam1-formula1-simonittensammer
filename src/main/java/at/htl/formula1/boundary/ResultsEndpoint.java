@@ -68,23 +68,19 @@ public class ResultsEndpoint {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
-    public JsonObject pointsOfEveryDriver() {
-        long count = (long) em.createNamedQuery("Driver.amountOfDrivers").getSingleResult();
+    public List<String[]> allRacesWonByTeam() {
+        List<Driver> drivers = em.createNamedQuery("Driver.findAll", Driver.class).getResultList();
+        List<String[]> driverWithPoints = new LinkedList<>();
 
-        System.out.println(count);
-
-        for (int i = 0; i < 20; i++) {
-
+        for (Driver driver: drivers) {
+            Long points = em.createNamedQuery("Result.allPoints", Long.class)
+                    .setParameter("ID", driver)
+                    .getSingleResult();
+            driverWithPoints.add(new String[]{driver.toString(), "" + points});
         }
 
-//        JsonObject driverJson = Json.createObjectBuilder()
-//                .add("driver", name)
-//                .add("points", points)
-//                .build();
-//
-//        return driverJson;
-
-        return null;
+        return driverWithPoints;
     }
 }
